@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BorrowerServiceImpl implements BorrowerService {
 
@@ -24,5 +26,9 @@ public class BorrowerServiceImpl implements BorrowerService {
         BorrowerEntity borrower = modelMapper.map(dto, BorrowerEntity.class);
         borrowerRepository.save(borrower);
         return true;
+    }
+
+    public List<BorrowerEntity> getBorrowers(){
+        return borrowerRepository.findAll();
     }
 }
