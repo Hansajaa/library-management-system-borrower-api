@@ -22,13 +22,20 @@ public class BorrowerServiceImpl implements BorrowerService {
     @Autowired
     ModelMapper modelMapper;
 
+    @Override
     public boolean addBorrower(BorrowerDto dto){
         BorrowerEntity borrower = modelMapper.map(dto, BorrowerEntity.class);
         borrowerRepository.save(borrower);
         return true;
     }
 
+    @Override
     public List<BorrowerEntity> getBorrowers(){
         return borrowerRepository.findAll();
+    }
+    @Override
+    public boolean deleteBorrower(Long id){
+        borrowerRepository.deleteById(id);
+        return true;
     }
 }

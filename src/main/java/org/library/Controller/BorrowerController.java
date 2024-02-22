@@ -3,6 +3,7 @@ package org.library.Controller;
 import lombok.extern.slf4j.Slf4j;
 import org.library.Dto.BorrowerDto;
 import org.library.Entity.BorrowerEntity;
+import org.library.Response.BorrowerResponse;
 import org.library.Service.BorrowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,18 @@ public class BorrowerController {
     }
 
     @GetMapping("/get")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public List<BorrowerEntity> getBorrwers(){
         return borrowerService.getBorrowers();
     }
+
+    @DeleteMapping("delete/{id}")
+    BorrowerResponse deleteBorrower(@PathVariable Long id){
+        boolean isDeleted = borrowerService.deleteBorrower(id);
+        return isDeleted ? new BorrowerResponse(String.format("userId %d is Successfully Deleted",id)):new BorrowerResponse("Borrower Not Found");
+    }
+
+
+
+
 }

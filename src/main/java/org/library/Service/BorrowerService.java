@@ -10,4 +10,6 @@ public interface BorrowerService {
     boolean addBorrower(BorrowerDto dto);
 
     List<BorrowerEntity> getBorrowers();
+
+    boolean deleteBorrower(Long id);
 }
