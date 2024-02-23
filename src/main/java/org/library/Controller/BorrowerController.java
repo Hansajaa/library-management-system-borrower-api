@@ -31,16 +31,20 @@ public class BorrowerController {
     @GetMapping("/get")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<BorrowerEntity> getBorrwers(){
+        try {
+            Thread.sleep(1000);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         return borrowerService.getBorrowers();
     }
 
     @DeleteMapping("delete/{id}")
-    BorrowerResponse deleteBorrower(@PathVariable Long id){
+    @ResponseStatus(HttpStatus.OK)
+    public BorrowerResponse deleteBorrower(@PathVariable Long id){
         boolean isDeleted = borrowerService.deleteBorrower(id);
         return isDeleted ? new BorrowerResponse(String.format("userId %d is Successfully Deleted",id)):new BorrowerResponse("Borrower Not Found");
     }
-
-
-
 
 }
