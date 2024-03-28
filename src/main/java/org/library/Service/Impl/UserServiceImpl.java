@@ -2,6 +2,7 @@ package org.library.Service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.library.Dto.UserDto;
 import org.library.Entity.UserEntity;
 import org.library.Repository.UserRepository;
@@ -26,7 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(UserDto dto){
+        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
         UserEntity user = modelMapper.map(dto, UserEntity.class);
+        user.setPassword(encryptor.encryptPassword(dto.getPassword()));
+
         userRepository.save(user);
         return true;
     }
