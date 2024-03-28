@@ -1,5 +1,6 @@
 package org.library.Controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.library.Dto.UserDto;
 import org.library.Entity.UserEntity;
@@ -16,12 +17,13 @@ import java.util.List;
 @RequestMapping("/user")
 @Slf4j
 @CrossOrigin
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    UserService userService;
 
-    @PostMapping("/add")
+    final UserService userService;
+
+    @PostMapping("/add-user")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> addUser(@RequestBody UserDto userDto){
         boolean isSaved = userService.addUser(userDto);
@@ -45,6 +47,18 @@ public class UserController {
     public UserResponse deleteUser(@PathVariable Long id){
         boolean isDeleted = userService.deleteUser(id);
         return isDeleted ? new UserResponse(String.format("userId %d is Successfully Deleted",id)):new UserResponse("User Not Found");
+    }
+
+    @GetMapping("find-by-userName/{userName}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto getUserByUserName(@PathVariable String userName){
+        return userService.findByUserName(userName);
+    }
+
+    @GetMapping("is-exists-username/{userName}")
+    @ResponseStatus(HttpStatus.OK)
+    public Boolean isExistsUserName(@PathVariable String userName){
+        return userService.isExistsUserName(userName);
     }
 
 }

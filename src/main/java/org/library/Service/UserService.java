@@ -12,4 +12,8 @@ public interface UserService {
     List<UserEntity> getUsers();
 
     boolean deleteUser(Long id);
+
+    UserDto findByUserName(String userName);
+
+    Boolean isExistsUserName(String userName);
 }

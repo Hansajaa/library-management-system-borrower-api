@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "borrower")
+@Entity(name = "user")
 public class UserEntity {
 
     @Id
@@ -19,7 +19,10 @@ public class UserEntity {
     private Long id;
     private String firstName;
     private String lastName;
-    private String dob;
+    private String userName;
+    private String password;
     private String email;
+    private String address;
+    private String address2;
     private String contactNumber;
 }
