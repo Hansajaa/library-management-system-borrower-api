@@ -2,9 +2,11 @@ package org.library.Controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.library.Dto.LoginDto;
 import org.library.Dto.UserDto;
 import org.library.Entity.UserEntity;
 import org.library.Response.UserResponse;
+import org.library.Service.LoginService;
 import org.library.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +24,13 @@ public class UserController {
 
 
     final UserService userService;
+    final LoginService loginService;
 
     @PostMapping("/add-user")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> addUser(@RequestBody UserDto userDto){
+        loginService.saveEmailAndPassword(new LoginDto(userDto.getEmail(),userDto.getPassword()));
+
         boolean isSaved = userService.addUser(userDto);
         return isSaved ? ResponseEntity.ok(String.format("Saved %s", userDto.getFirstName())) : ResponseEntity.badRequest().body("Not Saved");
     }
@@ -60,5 +65,7 @@ public class UserController {
     public Boolean isExistsUserName(@PathVariable String userName){
         return userService.isExistsUserName(userName);
     }
+
+
 
 }
