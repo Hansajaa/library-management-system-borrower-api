@@ -57,7 +57,13 @@ public class UserController {
     @GetMapping("find-by-userName/{userName}")
     @ResponseStatus(HttpStatus.OK)
     public UserDto getUserByUserName(@PathVariable String userName){
-        return userService.findByUserName(userName);
+        try {
+            return userService.findByUserName(userName);
+        }catch (Exception ex){
+            UserDto user = new UserDto();
+            user.setId(-1L);
+            return user;
+        }
     }
 
     @GetMapping("is-exists-username/{userName}")
